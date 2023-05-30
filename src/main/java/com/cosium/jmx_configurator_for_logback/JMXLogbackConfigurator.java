@@ -31,8 +31,7 @@ public class JMXLogbackConfigurator extends ContextAwareBase implements Configur
 
     String contextName = loggerContext.getName();
 
-    String objectNameAsStr =
-        MBeanUtil.getObjectNameFor(contextName, JMXConfigurator.class);
+    String objectNameAsStr = MBeanUtil.getObjectNameFor(contextName, JMXConfigurator.class);
 
     ObjectName objectName = MBeanUtil.string2ObjectName(context, this, objectNameAsStr);
     if (objectName == null) {
@@ -49,8 +48,7 @@ public class JMXLogbackConfigurator extends ContextAwareBase implements Configur
     // registered. Unregistering an MBean within invocation of itself
     // caused jconsole to throw an NPE. (This occurs when the reload* method
     // unregisters the
-    JMXConfigurator jmxConfigurator =
-        new JMXConfigurator(this, loggerContext, mbs, objectName);
+    JMXConfigurator jmxConfigurator = new JMXConfigurator(this, loggerContext, mbs, objectName);
     try {
       mbs.registerMBean(jmxConfigurator, objectName);
     } catch (Exception e) {
