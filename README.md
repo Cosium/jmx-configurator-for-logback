@@ -1,5 +1,5 @@
 [![Build Status](https://github.com/Cosium/jmx-configurator-for-logback/actions/workflows/ci.yml/badge.svg)](https://github.com/Cosium/jmx-configurator-for-logback/actions/workflows/ci.yml)
-[![Maven Central](https://img.shields.io/maven-central/v/com.cosium.jmx_configurator_for_logback/jmx-configurator-for-logback-spring-boot-starter.svg)](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22com.cosium.jmx_configurator_for_logback%22%20AND%20a%3A%22jmx-configurator-for-logback-spring-boot-starter%22)
+[![Maven Central](https://img.shields.io/maven-central/v/com.cosium.jmx_configurator_for_logback/jmx-configurator-for-logback.svg)](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22com.cosium.jmx_configurator_for_logback%22%20AND%20a%3A%22jmx-configurator-for-logback%22)
 
 # JMX Configurator for Logback
 
