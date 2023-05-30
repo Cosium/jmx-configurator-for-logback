@@ -268,9 +268,9 @@
   </repositories>
 
   <scm>
-    <connection>scm:git:https://github.com/Cosium/hal-mock-mvc</connection>
-    <developerConnection>scm:git:https://github.com/Cosium/hal-mock-mvc</developerConnection>
-    <url>https://github.com/Cosium/hal-mock-mvc</url>
+    <connection>scm:git:https://github.com/Cosium/jmx-configurator-for-logback</connection>
+    <developerConnection>scm:git:https://github.com/Cosium/jmx-configurator-for-logback</developerConnection>
+    <url>https://github.com/Cosium/jmx-configurator-for-logback</url>
     <tag>HEAD</tag>
   </scm>
 
