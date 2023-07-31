@@ -16,9 +16,6 @@ package com.cosium.jmx_configurator_for_logback;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.spi.Configurator;
 import ch.qos.logback.core.spi.ContextAwareBase;
-import java.lang.management.ManagementFactory;
-import javax.management.MBeanServer;
-import javax.management.ObjectName;
 
 /**
  * @author Réda Housni Alaoui
@@ -27,34 +24,13 @@ public class JMXLogbackConfigurator extends ContextAwareBase implements Configur
 
   @Override
   public ExecutionStatus configure(LoggerContext loggerContext) {
-    addInfo("begin");
+    Configuration.Builder configurationBuilder = Configuration.builder();
+    ConfigurationCustomizers.INSTANCE
+        .list()
+        .forEach(customizer -> customizer.customize(configurationBuilder));
+    Configuration configuration = configurationBuilder.build();
 
-    String contextName = loggerContext.getName();
-
-    String objectNameAsStr = MBeanUtil.getObjectNameFor(contextName, JMXConfigurator.class);
-
-    ObjectName objectName = MBeanUtil.string2ObjectName(context, this, objectNameAsStr);
-    if (objectName == null) {
-      addError("Failed construct ObjectName for [" + objectNameAsStr + "]");
-      return ExecutionStatus.NEUTRAL;
-    }
-
-    MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
-    if (MBeanUtil.isRegistered(mbs, objectName)) {
-      return ExecutionStatus.NEUTRAL;
-    }
-
-    // register only of the named JMXConfigurator has not been previously
-    // registered. Unregistering an MBean within invocation of itself
-    // caused jconsole to throw an NPE. (This occurs when the reload* method
-    // unregisters the
-    JMXConfigurator jmxConfigurator = new JMXConfigurator(this, loggerContext, mbs, objectName);
-    try {
-      mbs.registerMBean(jmxConfigurator, objectName);
-    } catch (Exception e) {
-      addError("Failed to create mbean", e);
-    }
-
+    loggerContext.addListener(new JMXConfigurators(this, configuration));
     return ExecutionStatus.NEUTRAL;
   }
 }
