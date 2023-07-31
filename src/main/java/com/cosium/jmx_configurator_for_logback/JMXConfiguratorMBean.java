@@ -15,6 +15,9 @@ package com.cosium.jmx_configurator_for_logback;
 
 import java.util.List;
 
+/**
+ * @author Réda Housni Alaoui
+ */
 public interface JMXConfiguratorMBean {
 
   void setLoggerLevel(String loggerName, String levelStr);
