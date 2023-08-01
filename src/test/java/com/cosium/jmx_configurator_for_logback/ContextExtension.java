@@ -10,6 +10,12 @@ import org.junit.jupiter.api.extension.ParameterResolver;
  * @author Réda Housni Alaoui
  */
 class ContextExtension implements ParameterResolver, BeforeEachCallback {
+
+  @Override
+  public void beforeEach(ExtensionContext context) {
+    getTestContext().reset();
+  }
+
   @Override
   public boolean supportsParameter(
       ParameterContext parameterContext, ExtensionContext extensionContext)
@@ -22,11 +28,6 @@ class ContextExtension implements ParameterResolver, BeforeEachCallback {
       ParameterContext parameterContext, ExtensionContext extensionContext)
       throws ParameterResolutionException {
     return getTestContext();
-  }
-
-  @Override
-  public void beforeEach(ExtensionContext context) {
-    getTestContext().reset();
   }
 
   private TestContext getTestContext() {

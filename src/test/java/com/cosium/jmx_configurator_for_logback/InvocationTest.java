@@ -13,11 +13,13 @@ import javax.management.ReflectionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author Réda Housni Alaoui
  */
+@ExtendWith(ContextExtension.class)
 class InvocationTest {
   private Logger logger;
 
