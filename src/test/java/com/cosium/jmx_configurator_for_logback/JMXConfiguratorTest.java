@@ -10,7 +10,6 @@ import java.io.ByteArrayInputStream;
 import java.lang.management.ManagementFactory;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CountDownLatch;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,13 +21,6 @@ import org.slf4j.LoggerFactory;
  */
 @ExtendWith(ContextExtension.class)
 class JMXConfiguratorTest {
-
-  @BeforeEach
-  void beforeEach() {
-    LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
-    context.reset();
-    context.start();
-  }
 
   @Test
   @DisplayName("By default the registered context is 'default'")
