@@ -7,11 +7,18 @@ import ch.qos.logback.core.status.StatusUtil;
 import java.lang.management.ManagementFactory;
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
+import javax.management.MBeanException;
 import javax.management.MBeanRegistrationException;
 import javax.management.MBeanServer;
 import javax.management.MalformedObjectNameException;
 import javax.management.NotCompliantMBeanException;
 import javax.management.ObjectName;
+import javax.management.modelmbean.InvalidTargetObjectTypeException;
+import javax.management.modelmbean.ModelMBeanAttributeInfo;
+import javax.management.modelmbean.ModelMBeanConstructorInfo;
+import javax.management.modelmbean.ModelMBeanInfoSupport;
+import javax.management.modelmbean.ModelMBeanNotificationInfo;
+import javax.management.modelmbean.RequiredModelMBean;
 
 /**
  * @author Réda Housni Alaoui
@@ -48,8 +55,25 @@ class JMXConfiguratorSession implements AutoCloseable {
       return;
     }
 
+    RequiredModelMBean requiredModelMBean;
     try {
-      mBeanServer.registerMBean(new JMXConfigurator(context, loggerContext), objectName);
+      requiredModelMBean =
+          new RequiredModelMBean(
+              new ModelMBeanInfoSupport(
+                  JMXConfigurator.class.getName(),
+                  "Allows to configure Logback during runtime",
+                  new ModelMBeanAttributeInfo[0],
+                  new ModelMBeanConstructorInfo[0],
+                  ModelMBeanOperationInfos.INSTANCE.parseFrom(JMXConfiguratorMBean.class),
+                  new ModelMBeanNotificationInfo[0]));
+      requiredModelMBean.setManagedResource(
+          new JMXConfigurator(context, loggerContext), "objectReference");
+    } catch (MBeanException | InstanceNotFoundException | InvalidTargetObjectTypeException e) {
+      throw new StartException(e);
+    }
+
+    try {
+      mBeanServer.registerMBean(requiredModelMBean, objectName);
     } catch (RuntimeException
         | InstanceAlreadyExistsException
         | MBeanRegistrationException
@@ -104,6 +128,10 @@ class JMXConfiguratorSession implements AutoCloseable {
 
     private StartException(String message) {
       super(message);
+    }
+
+    private StartException(Throwable cause) {
+      super(cause);
     }
   }
 }
