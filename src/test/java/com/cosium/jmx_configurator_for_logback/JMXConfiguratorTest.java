@@ -10,9 +10,6 @@ import java.io.ByteArrayInputStream;
 import java.lang.management.ManagementFactory;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CountDownLatch;
-import javax.management.MBeanServer;
-import javax.management.MalformedObjectNameException;
-import javax.management.ObjectName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,7 +32,7 @@ class JMXConfiguratorTest {
 
   @Test
   @DisplayName("By default the registered context is 'default'")
-  void test1() throws MalformedObjectNameException {
+  void test1() {
     Logger logger = LoggerFactory.getLogger(JMXConfiguratorTest.class);
     assertThat(logger).isNotNull();
     assertThat(isMBeanRegistered("default")).isTrue();
@@ -47,8 +44,7 @@ class JMXConfiguratorTest {
 
   @Test
   @DisplayName("Context name customized with Joran is reflected on the MBean ObjectName")
-  void test2(TestContext testContext)
-      throws JoranException, MalformedObjectNameException, InterruptedException {
+  void test2(TestContext testContext) throws JoranException, InterruptedException {
     JoranConfigurator configurator = new JoranConfigurator();
     LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
     configurator.setContext(context);
@@ -69,11 +65,8 @@ class JMXConfiguratorTest {
     assertThat(isMBeanRegistered("test")).isTrue();
   }
 
-  private boolean isMBeanRegistered(String contextName) throws MalformedObjectNameException {
-    MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
-    return mbs.isRegistered(
-        ObjectName.getInstance(
-            "com.cosium.jmx_configurator_for_logback:Name=%s,Type=com.cosium.jmx_configurator_for_logback.JMXConfigurator"
-                .formatted(contextName)));
+  private boolean isMBeanRegistered(String contextName) {
+    return ManagementFactory.getPlatformMBeanServer()
+        .isRegistered(ObjectNames.INSTANCE.createObjectName(contextName));
   }
 }

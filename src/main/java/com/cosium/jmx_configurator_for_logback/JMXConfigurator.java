@@ -32,7 +32,7 @@ import java.util.List;
  * @author Sebastian Davids
  * @author Réda Housni Alaoui
  */
-class JMXConfigurator implements JMXConfiguratorMBean {
+public class JMXConfigurator implements JMXConfiguratorMBean {
 
   private static final String EMPTY = "";
 

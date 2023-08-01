@@ -20,7 +20,7 @@ import java.util.List;
  */
 public interface JMXConfiguratorMBean {
 
-  void setLoggerLevel(String loggerName, String levelStr);
+  void setLoggerLevel(String loggerName, String newLevel);
 
   String getLoggerLevel(String loggerName);
 
