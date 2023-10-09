@@ -1,4 +1,5 @@
 package com.cosium.jmx_configurator_for_logback;
+
 /**
  * @author Réda Housni Alaoui
  */
