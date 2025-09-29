@@ -16,7 +16,7 @@
 
     <logback.version>1.4.0</logback.version>
     <junit.version>5.13.4</junit.version>
-    <assertj.version>3.27.5</assertj.version>
+    <assertj.version>3.27.6</assertj.version>
 
     <git-code-format-maven-plugin.version>5.3</git-code-format-maven-plugin.version>
   </properties>
