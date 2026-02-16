@@ -15,7 +15,7 @@
     <maven.compiler.target>17</maven.compiler.target>
 
     <logback.version>1.4.0</logback.version>
-    <junit.version>6.0.2</junit.version>
+    <junit.version>6.0.3</junit.version>
     <assertj.version>3.27.7</assertj.version>
 
     <git-code-format-maven-plugin.version>5.4</git-code-format-maven-plugin.version>
